@@ -14,9 +14,9 @@ function getNLUInstance(){
     const naturalLanguageUnderstanding = new NaturalLanguageUnderstandingV1({
         version: '2020-08-01',
         authenticator: new IamAuthenticator({
-            apikey: '{api_key}',
+            apikey: api_key,
         }),
-        serviceUrl: '{api_url}',
+        serviceUrl: api_url,
     });
     return naturalLanguageUnderstanding ;
 }
@@ -31,20 +31,88 @@ app.get("/",(req,res)=>{
   });
 
 app.get("/url/emotion", (req,res) => {
+    let naturalLanguageUnderstanding = getNLUInstance() ;
+    const analyzeParams = {
+        'html': req.query.url,
+        'features': {
+            'emotion': { }
+        }
+    };
 
-    return res.send({"happy":"90","sad":"10"});
+    naturalLanguageUnderstanding.analyze(analyzeParams)
+        .then(analysisResults => {
+            let resAnalysisResult = JSON.stringify(analysisResults.result.emotion.document.emotion, null, 2) ;
+            return res.status('200').send(resAnalysisResult);
+        })
+        .catch(err => {
+            let Error = "Error: " + err.toString() ;
+            return res.send(Error);
+    });
+    //return res.send({"happy":"90","sad":"10"});
 });
 
 app.get("/url/sentiment", (req,res) => {
-    return res.send("url sentiment for "+req.query.url);
+    let naturalLanguageUnderstanding = getNLUInstance() ;
+    
+    const analyzeParams = {
+        'html': req.query.url,
+        'features': {
+            'sentiment': { }
+        }
+    };
+
+    naturalLanguageUnderstanding.analyze(analyzeParams)
+        .then(analysisResults => {
+            let resAnalysisResult = JSON.stringify(analysisResults.result.emotion.document.emotion, null, 2) ;
+            return res.status('200').send(resAnalysisResult);
+        })
+        .catch(err => {
+            let Error = "Error: " + err.toString() ;
+            return res.send(Error);
+    });
+    //return res.send("url sentiment for "+req.query.url);
 });
 
 app.get("/text/emotion", (req,res) => {
-    return res.send({"happy":"10","sad":"90"});
+    let naturalLanguageUnderstanding = getNLUInstance() ;
+        const analyzeParams = {
+        'html': req.query.text,
+        'features': {
+            'emotion': { }
+        }
+    };
+
+    naturalLanguageUnderstanding.analyze(analyzeParams)
+        .then(analysisResults => {
+            let resAnalysisResult = JSON.stringify(analysisResults.result.emotion.document.emotion, null, 2) ;
+            return res.status('200').send(resAnalysisResult);
+        })
+        .catch(err => {
+            let Error = "Error: " + err.toString() ;
+            return res.send(Error);
+    });
+    //return res.send({"happy":"10","sad":"90"});
 });
 
 app.get("/text/sentiment", (req,res) => {
-    return res.send("text sentiment for "+req.query.text);
+    let naturalLanguageUnderstanding = getNLUInstance() ;
+        const analyzeParams = {
+        'html': req.query.url,
+        'features': {
+            'sentiment': { }
+        }
+    };
+
+    naturalLanguageUnderstanding.analyze(analyzeParams)
+        .then(analysisResults => {
+            let resAnalysisResult = JSON.stringify(analysisResults.result.emotion.document.emotion, null, 2) ;
+            return res.status('200').send(resAnalysisResult);
+        })
+        .catch(err => {
+            let Error = "Error: " + err.toString() ;
+            return res.send(Error);
+    });
+    //return res.send("text sentiment for "+req.query.text);
 });
 
 let server = app.listen(8080, () => {
