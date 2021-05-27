@@ -5,12 +5,16 @@ import React from 'react';
 import axios from 'axios';
 
 class App extends React.Component {
-  state = {innercomp:<textarea rows="4" cols="50" id="textinput"/>,
+  state = {innercomp:<textarea rows="8" cols="50" id="textinput"/>,
             mode: "text",
           sentimentOutput:[],
           sentiment:true
         }
   
+    componentDidMount(){
+        document.title = "Sentiment Analyzer"
+    }
+
   renderTextArea = ()=>{
     document.getElementById("textinput").value = "";
     if(this.state.mode === "url") {
