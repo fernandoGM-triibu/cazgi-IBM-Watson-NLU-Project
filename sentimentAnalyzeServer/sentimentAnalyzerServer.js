@@ -76,7 +76,7 @@ app.get("/url/sentiment", (req,res) => {
 app.get("/text/emotion", (req,res) => {
     let naturalLanguageUnderstanding = getNLUInstance() ;
         const analyzeParams = {
-        'html': req.query.text,
+        'text': req.query.text,
         'features': {
             'emotion': { }
         }
@@ -84,7 +84,7 @@ app.get("/text/emotion", (req,res) => {
 
     naturalLanguageUnderstanding.analyze(analyzeParams)
         .then(analysisResults => {
-            let resAnalysisResult = JSON.stringify(analysisResults.result.emotion.document.emotion, null, 2) ;
+            let resAnalysisResult = JSON.stringify(analysisResults.result.emotion.document, null, 2) ;
             return res.status('200').send(resAnalysisResult);
         })
         .catch(err => {
@@ -97,7 +97,7 @@ app.get("/text/emotion", (req,res) => {
 app.get("/text/sentiment", (req,res) => {
     let naturalLanguageUnderstanding = getNLUInstance() ;
         const analyzeParams = {
-        'html': req.query.url,
+        'text': req.query.text,
         'features': {
             'sentiment': { }
         }
@@ -105,7 +105,9 @@ app.get("/text/sentiment", (req,res) => {
 
     naturalLanguageUnderstanding.analyze(analyzeParams)
         .then(analysisResults => {
-            let resAnalysisResult = JSON.stringify(analysisResults.result.emotion.document.emotion, null, 2) ;
+            let resAnalysisResult = JSON.stringify(analysisResults.result.sentiment.document.label, null, 2) ;
+            //let resAnalysisResult = analysisResults.result.sentiment.document ;
+            console.log(resAnalysisResult) ;
             return res.status('200').send(resAnalysisResult);
         })
         .catch(err => {
