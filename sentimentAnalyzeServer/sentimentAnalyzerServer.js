@@ -41,7 +41,8 @@ app.get("/url/emotion", (req,res) => {
 
     naturalLanguageUnderstanding.analyze(analyzeParams)
         .then(analysisResults => {
-            let resAnalysisResult = JSON.stringify(analysisResults.result.emotion.document.emotion, null, 2) ;
+            //let resAnalysisResult = JSON.stringify(analysisResults.result.emotion.document.emotion, null, 2) ;
+            let resAnalysisResult = JSON.stringify(analysisResults.result.emotion.document, null, 2) ;
             return res.status('200').send(resAnalysisResult);
         })
         .catch(err => {
@@ -63,7 +64,11 @@ app.get("/url/sentiment", (req,res) => {
 
     naturalLanguageUnderstanding.analyze(analyzeParams)
         .then(analysisResults => {
-            let resAnalysisResult = JSON.stringify(analysisResults.result.emotion.document.emotion, null, 2) ;
+            //let resAnalysisResult = JSON.stringify(analysisResults.result.emotion.document.emotion, null, 2) ;
+            //return res.status('200').send(resAnalysisResult);
+            let resAnalysisResult = JSON.stringify(analysisResults.result.sentiment.document.label, null, 2) ;
+            //let resAnalysisResult = analysisResults.result.sentiment.document ;
+            console.log(resAnalysisResult) ;
             return res.status('200').send(resAnalysisResult);
         })
         .catch(err => {
