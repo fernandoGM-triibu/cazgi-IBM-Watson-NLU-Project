@@ -14,10 +14,8 @@ class EmotionTable extends React.Component {
                 Object.entries(this.props.emotions.emotion).map(function(mapentry) {
                     return (
                         <tr>
-                        <td></td>
        <td>{mapentry[0]}</td>
         <td>{mapentry[1]}</td>                        
-                        <td></td>
                         </tr>
                     )
                 })
